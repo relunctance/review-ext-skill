@@ -48,6 +48,43 @@ hermes -p review -s review-ext-skill
 | architect-review | 架构评审 | P1 |
 | security-auditor | 安全审计 | P2 |
 
+## 同步到 Hermes
+
+### 安装 Skill 文件到 Hermes Profile
+
+```bash
+# 进入仓库目录
+cd /home/gql/repos/review-ext-skill
+
+# 执行同步脚本
+bash sync-to-hermes.sh review
+```
+
+同步后目录结构：
+```
+~/.hermes/profiles/review/skills/
+├── review-ext-skill/                    # 路由器
+│   ├── SKILL.md
+│   └── references/
+├── bmad-review/                       # 独立 skill（软链接）
+│   └── SKILL.md → review-ext-skill/references/bmad-review.md
+├── code-reviewer/                     # 独立 skill（软链接）
+│   └── SKILL.md → review-ext-skill/references/code-reviewer.md
+└── ...                               # 其他 skills
+```
+
+### 验证安装
+
+```bash
+# 查看已安装的 skills
+ls -la ~/.hermes/profiles/review/skills/
+
+# 验证软链接
+readlink -f ~/.hermes/profiles/review/skills/bmad-review/SKILL.md
+```
+
+---
+
 ## 工作流
 
 详见 [SKILL.md](SKILL.md)
