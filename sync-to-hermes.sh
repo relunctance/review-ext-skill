@@ -30,6 +30,12 @@ for ref_file in ${EXT_SKILL_DIR}/references/*.md; do
   echo "✓ ${skillname}"
 done
 
+
+# 3. 创建 shared/ 软链接（指向 gql-bots/shared/）
+mkdir -p ${EXT_SKILL_DIR}/shared
+ln -sf /home/gql/gql-bots/shared/communication ${EXT_SKILL_DIR}/shared/communication
+echo "✓ shared/communication → /home/gql/gql-bots/shared/communication"
+
 echo ""
 echo "=== 同步完成 ==="
 ls -la ${SKILL_DIR}/
