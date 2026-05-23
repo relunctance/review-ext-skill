@@ -26,7 +26,7 @@ from typing import Set, List, Dict, Optional
 
 
 # 常量
-HERMES_BASE = Path.home() / ".hermes" / "profiles"
+HERMES_BASE = Path("/home/gql/.hermes/profiles")
 REPOS_BASE = Path("/home/gql/repos")
 GQL_BOTS_SHARED = Path("/home/gql/gql-bots/shared")
 
