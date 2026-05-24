@@ -59,7 +59,7 @@ hermes -p review -s review-ext-skill
 cd /home/gql/repos/review-ext-skill
 
 # 执行同步脚本
-bash sync-to-hermes.sh review
+python sync_to_hermes.py review
 ```
 
 同步后目录结构：

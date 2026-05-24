@@ -14,7 +14,7 @@
 cd /home/gql/repos/review-ext-skill
 
 # 执行同步脚本
-bash sync-to-hermes.sh review
+python sync_to_hermes.py review
 ```
 
 ### 方式 2：手动安装
@@ -27,7 +27,7 @@ git clone https://github.com/relunctance/review-ext-skill.git ~/.hermes/profiles
 cd ~/.hermes/profiles/review/skills/review-ext-skill
 
 # 3. 执行同步
-bash sync-to-hermes.sh review
+python sync_to_hermes.py review
 ```
 
 ## 验证安装
@@ -80,7 +80,7 @@ MODE_CONFIG: full_auto  # full_auto | semi_auto
 ```bash
 cd /home/gql/repos/review-ext-skill
 git pull
-bash sync-to-hermes.sh review
+python sync_to_hermes.py review
 ```
 
 ## 卸载
