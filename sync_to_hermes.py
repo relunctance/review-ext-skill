@@ -26,6 +26,8 @@ from typing import Set, List, Dict, Optional
 
 
 # 常量
+# 注意：WSL 环境下 Path.home() 可能返回 ~/.hermes/profiles/<profile>/home
+# 所以使用明确的绝对路径
 HERMES_BASE = Path("/home/gql/.hermes/profiles")
 REPOS_BASE = Path("/home/gql/repos")
 GQL_BOTS_SHARED = Path("/home/gql/gql-bots/shared")
@@ -209,7 +211,11 @@ def cleanup_other_ext_skills(role: str, args) -> Dict[str, any]:
         
         item_name = item.name
         
-        # 检查是否是 ext-skill
+        # 跳过 gql-* 和非 ext-skill 目录
+        if item_name.startswith("gql-"):
+            continue
+        
+        # 检查是否是 ext-skill（以 -ext-skill 结尾）
         if item_name.endswith("-ext-skill"):
             if item_name != keep_ext_skill:
                 action = f"清理（污染）: {item_name}"
@@ -217,19 +223,12 @@ def cleanup_other_ext_skills(role: str, args) -> Dict[str, any]:
                     result["actions"].append(f"[DRY-RUN] {action}")
                 else:
                     result["actions"].append(action)
-                    shutil.rmtree(item)
+                    try:
+                        shutil.rmtree(item)
+                    except Exception as e:
+                        result["errors"].append(f"删除 {item_name} 失败: {e}")
             else:
                 result["actions"].append(f"保留: {item_name}")
-        elif item_name in VALID_ROLES:
-            # 检查是否有嵌套的 ext-skill
-            nested_ext = item / f"{item_name}-ext-skill"
-            if nested_ext.exists():
-                action = f"清理（嵌套污染）: {nested_ext}"
-                if dry_run:
-                    result["actions"].append(f"[DRY-RUN] {action}")
-                else:
-                    result["actions"].append(action)
-                    shutil.rmtree(nested_ext)
     
     return result
 
